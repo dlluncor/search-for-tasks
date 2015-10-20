@@ -1,0 +1,65 @@
+{% extends "partials/base.html" %}
+{% block head %}
+    <link rel="stylesheet" href="/assets/css/home.min.css">
+    {{ super() }}
+{% endblock %}
+
+{% block body %}
+{{ super() }}
+
+<div class="page-wrapper">
+    <section class="header-10-sub v-center bg-midnight-blue">
+        <div class="background use-cover">
+            <div class="black-cover"></div>
+            &nbsp;
+        </div>
+        <div>
+            <div class="container">
+                <div class="hero-unit">
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-sm-offset-4">
+                        <form action="/quote" method='post'>
+                            <div class="form-group">
+                            <div>
+                                <img src="/assets/images/1445395424_approval.png"></img>
+                            </div>
+                            <label>I want to...</label>
+                                <input class="form-control" name="first_name" type="text" placeholder="fix my wrist pain" required>
+                            </div>
+                            <div class="form-group">
+                                <button id="top-quote-btn" type="submit" class="btn btn-block btn-info">Do it!</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/assets/js/modernizr.custom.js"></script>
+<script src="/assets/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script src="/assets/js/jquery.parallax.min.js"></script>
+<script src="/assets/js/startup-kit.js"></script>
+<script src="/assets/js/jquery.backgroundvideo.min.js"></script>
+<script src="/assets/js/script.js"></script>
+<script src="/assets/js/libraries/jquery.scrolldepth.js"></script>
+<script type="text/javascript">
+  $(function() {  $.scrollDepth({labelPrefix:"HOME:"}); });
+</script>
+<script type="text/javascript">
+    $("#top-quote-btn").click(function() {
+        mixpanel.track("click HOME:top-quote-btn");
+    })
+    $("#mid-quote-btn").click(function() {
+        mixpanel.track("click HOME:mid-quote-btn");
+    })
+    $("#btm-quote-btn").click(function() {
+        mixpanel.track("click HOME:btm-quote-btn");
+    })
+</script>
+{% endblock %}
