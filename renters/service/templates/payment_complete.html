@@ -1,0 +1,66 @@
+{% extends "partials/base.html" %}
+{% block head %}
+{{ super() }}
+
+<!-- Facebook Conversion Code for Registrations - Christopher K. Lee 1 -->
+<script>(function() {
+  var _fbq = window._fbq || (window._fbq = []);
+  if (!_fbq.loaded) {
+    var fbds = document.createElement('script');
+    fbds.async = true;
+    fbds.src = '//connect.facebook.net/en_US/fbds.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(fbds, s);
+    _fbq.loaded = true;
+  }
+})();
+window._fbq = window._fbq || [];
+window._fbq.push(['track', '6034168879840', {'value':'0.00','currency':'USD'}]);
+</script>
+<noscript>
+    <img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=6034168879840&amp;cd[value]=0.00&amp;cd[currency]=USD&amp;noscript=1" />
+</noscript>
+{% endblock %}
+
+
+{% block body %}
+{{ super() }}
+
+<div class="page-wrapper">
+    <section id="names" class="content-8 v-center first">
+        <div>
+            <div class="container price-1">
+                <h3>Thank you for your purchase!</h3>
+                <p>
+                    <!--Enter your First and Last Name.<br>-->
+                   Please check your email for a confirmation of your quote.
+                   We will give you a call shortly to follow-up and explain any questions you might have.
+                </p>
+                <h2>Your plan</h2>
+                <div class="col-sm-offset-4 col-sm-4" id="plan-card">
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script src="/assets/js/price_details.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/assets/js/modernizr.custom.js"></script>
+<script src="/assets/js/jquery.parallax.min.js"></script>
+<script src="/assets/js/startup-kit.js"></script>
+<script>
+  $(document).ready(function() {
+    var price = localStorage['estimated-value'];
+    //$('#estimated-price').text('' + price);
+    var planBought = localStorage['plan-bought'];
+    $('#plan-card').html(rts.priceCardHtml(planBought));
+    var priceDivId = rts.divId(planBought);
+    $('#' + priceDivId).html('$' + price + ' / month');
+    $('#plan-card a.btn').hide();
+  });
+</script>
+{% endblock %}
