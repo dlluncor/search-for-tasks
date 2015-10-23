@@ -31,6 +31,7 @@ foam roller - is needed for - different quadracep physical pain
 different quadracep physical pain - is - [cat 1 quad, cat 2 quad, cat 3 quad, cat 4]
 cat 1 quad - characterized by - cannot pull knee more than 70% back
 cat 1 quad - requires - Knee strengthening band from Amazon
+The body is made of - a bundle of - fascia
 
 ## KG for mental health tasks
 
@@ -57,4 +58,18 @@ lower oxytocin levels - leads to - lower happiness
 lower happiness - leads to - less customer engagement
 less customer engagement - leads to - less long term revenue
 less long term revenue - leads to - company failing
+
+## KG for services
+
+To sell a house - the best app is - Hauzz
+To sell a house - the amateur experts are - Chris Lee
+To sell a house - the best real estate agent for you is - Beverley
+To sell a house - to do research - look at Zillow
+
+## KG for characteristics
+
+To be a great leader - you need - [emotional intelligence, good listening, public speaking]
+public speaking - go to - Toastmasters
+emotional intelligence - talk to - Coca Cola Scholars, watch this Youtube video
+good listening - practice - community helpline when the kid is 15 yrs old
 
