@@ -33,6 +33,64 @@ def send_js(path):
 def home_page():
     return util.render_common_template('index.html')
 
+accepted_words = frozenset([
+  'wrist', 'pain',
+  'poop', 'constipation',
+  'anxiety', 'depression'
+])
+
+def remove_stopwords(q):
+  words = q.split(' ')
+  s = []
+  for word in words:
+    if word in accepted_words:
+      s.append(word)
+  return ' '.join(s)
+
+def get_results(q):
+  generic = [
+  {'suggestion': 
+    """We dont have help for that yet! Please help contribute to our database of problems to solve <a href="{name}" target="_blank">here</a>.
+    """.format(name='https://docs.google.com/document/d/1lTk44VaD0rmLMCHbPUPJ2eg8xfRR0tj5l9ssehNzGQI/edit'), 
+    'poster': 'Worry Free CO.'
+  }]
+
+  # Remove stop words. Then look up what is the appropriate diagnosis in our Google
+  # Doc.
+  d = {
+    'wrist pain': 'https://docs.google.com/document/d/1gdWu1Bud_j7omTOZYulZAxVgg-M2U-LKXMnC3sL_gJs/edit',
+    # Constipation
+    'poop': 'https://docs.google.com/document/d/1BLasIf5rhg1DHweHNR0mQJalabW-CvLY7aAMwxUbaCs/edit',
+    'constipation': 'https://docs.google.com/document/d/1BLasIf5rhg1DHweHNR0mQJalabW-CvLY7aAMwxUbaCs/edit',
+    # Anxiety / depression
+    'anxiety': 'https://docs.google.com/document/d/13TB5VoYIwol6M7NQANAjcLWMkPtkuChCphLjlwsCN9g/edit',
+    'depression': 'https://docs.google.com/document/d/13TB5VoYIwol6M7NQANAjcLWMkPtkuChCphLjlwsCN9g/edit'
+  }
+  q_stripped = remove_stopwords(q)
+  recommended_doc = d.get(q_stripped, None)
+  if recommended_doc is None:
+    return generic
+
+  david_html = """
+    Heres our definitive guide based on our many years of dealing with the same issue. <a href="{name}" target="_blank">(link)</a>
+  """.format(name=recommended_doc)
+  results = [
+    {'suggestion': david_html, 'poster': 'David L.'},
+    {'suggestion': 'Go see your nearest local doctor.', 'poster': 'Generic person'}
+  ]
+  return results
+
+
+@app.route('/search', methods=['GET'])
+def search():
+    query = request.args.get('q')
+    results = get_results(query)
+    info = {
+      'q': query,
+      'results': results
+    }
+    return util.render_common_template('results.html', info=info)
+
 @app.route('/quote', methods=['GET', 'POST'])
 def quote_page():
     # The Amazon Elastic Load Balancer (ELB) supports a HTTP header called X-FORWARDED-PROTO.
@@ -68,116 +126,6 @@ def privacy_policy():
 @app.route('/about')
 def about():
     return util.render_common_template('about.html')
-
-# Practice handlers
-@app.route('/email_template', methods=['GET'])
-def email_template():
-    form = {'last_name': u'Lee', 'is_non_smoking_household': 'Y', 'property_losses_count': '0',
-            'personal_property_worth': '60000', 'medical_payments': '1000', 'has_home_security': 'Y',
-            'email_address': u'david@bonjoylabs.com', 'has_local_fire_smoke_alarm': 'Y', 'first_name': u'David',
-            'personal_liability': '300000', 'has_bite_dog': 'N', 'label': -1, 'state': u'California',
-            'unit_count': '5+', 'zip_code': u'94063', 'phone_number': u'', 'insurance_type': u'renters',
-            'city': u'Rewood City', 'has_center_fire_burglar_alarm': 'Y', 'has_fire_sprinkler_system': 'Y',
-            'has_local_burglar_alarm': 'Y', 'address': u'3328 Bay Road', 'farmers_identity_protection': 'N',
-            'dob': '01/01/1984', 'has_auto_insurance_coverage': 'N', 'deductible': '1000',
-            'purchase_category': 'deluxe', 'policy_price': '$%.2f' % (13.4567)}
-    #return util.render_common_template('email/confirmation.txt', first_name="David")
-    return util.render_common_template('email/full_page.html', page="email/confirmation.html", **form)
-
-#from price_engine import renters_serving_scorer
-#from price_engine import renter_constants
-#from price_engine.ml import model_cfg
-
-def ExpandDefaults(purchase_category):
-  d = {
-    'dob': '01/01/1984',
-    'has_bite_dog': 'N',
-    'has_auto_insurance_coverage': 'N',
-    'has_fire_sprinkler_system': 'Y',
-    'has_center_fire_burglar_alarm': 'Y',
-    'has_local_fire_smoke_alarm': 'Y',
-    'has_home_security': 'Y',
-    'is_non_smoking_household': 'Y',
-    'has_local_burglar_alarm': 'Y',
-    'farmers_identity_protection': 'N',
-    'unit_count': '5+',
-    'property_losses_count': '0',
-    'medical_payments': '1000',
-    'personal_liability': '100000'
-  }
-  cat = purchase_category
-  if cat == 'cheap':
-    d['personal_property_worth'] = '4000'
-    d['deductible'] = '500'
-  elif cat == 'medium':
-    d['personal_property_worth'] = '30000'
-    d['deductible'] = '1000'
-  elif cat == 'deluxe':
-    d['personal_property_worth'] = '60000'
-    d['personal_liability'] = '300000'
-    d['deductible'] = '1000'
-  else:
-    app.logger.error('Unrecognized purchase category: %s' % cat)
-    raise Exception('Unrecognized purchase category: %s' % cat)
-  return d
-
-
-def get_price_of_user_form(data, use_memorized_only, l_config=None):
-  renter_form_dict = data['renter_form']
-  # Fill out the entire renter form.
-  defaults = ExpandDefaults(renter_form_dict['purchase_category'])
-  renter_form_dict.update(defaults)
-
-  # Create config to pass into renter serving scorer.
-  # Change directories so that we can properly access the files.
-  # Right now they are set up to be relative to the engine
-  if l_config is None:
-    l_config = renter_constants.learned_config2
-    model_cfg.change_dirs('../price_engine/models', l_config.model_configs)
-  price = renters_serving_scorer.get_price(l_config, renter_form_dict, use_memorized_only)
-  return price
-
-def get_three_prices(data, use_memorized_only):
-  """
-    Get three prices returns the price engine for each of the three prices.
-  """
-  categories = ['cheap', 'medium', 'deluxe']
-  d = {}
-  for cat in categories:
-    # Generate three prices.
-    cat_data = copy.deepcopy(data)
-    cat_data['renter_form']['purchase_category'] = cat
-    price = get_price_of_user_form(cat_data, use_memorized_only)
-    d[cat] = '%f' % (price)
-  return d
-
-@app.route('/three_prices', methods=['POST'])
-def three_prices():
-    """
-      When the user wants to know three options.
-    """
-    try:
-      d = get_three_prices(request.get_json(), config.use_memorized_only)
-      return jsonify(prices=d)
-    except Exception as e:
-      line = traceback.format_exc()
-      return line
-
-@app.route('/price', methods=['POST'])
-def price():
-    """
-      When the user wants to know what is the estimated price of
-      their insurance policy.
-    """
-    try:
-      data = request.get_json()
-      price = get_price_of_user_form(data, config.use_memorized_only)
-      return '%f' % (price)
-    except Exception as e:
-      line = traceback.format_exc()
-      return line
-
-    #return util.render_common_template('about.html')
 
 #first name, last name, address, phone number, dob
 @app.route('/buy', methods=['POST'])

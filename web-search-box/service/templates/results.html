@@ -1,5 +1,12 @@
 {% extends "partials/base.html" %}
 {% block head %}
+    <style>
+      .result-card {
+        border: 1px solid white;
+        padding: 10px;
+        margin: 10px;
+      }
+    </style>
     <link rel="stylesheet" href="/assets/css/home.min.css">
     {{ super() }}
 {% endblock %}
@@ -9,35 +16,49 @@
 
 <div class="page-wrapper">
     <section class="header-10-sub v-center bg-midnight-blue">
+    <div class="row">
+    <div class="form-group">
+    <label>Here's how you can {{info.q}}</label>
+    {% for r in info.results %}
+      <div class="result-card">
+       <div>
+           <span>{{ r.suggestion | safe}}</span>
+           <span>
+             <img src="/assets/images/up-128.png" width="50" height="50"></img>
+             <img src="/assets/images/1445403574_down.png" width="50" height="50"></img>
+           </span>
+       </div>
+       <div style="font-size:11px;">
+         Posted by {{r.poster}}
+       </div>
+      </div>
+    {% endfor %}
+    </div>
+</div>
+
+<!--
         <div class="background use-cover">
             <div class="black-cover"></div>
             &nbsp;
         </div>
         <div>
             <div class="container">
+                <div class="hero-unit">
+                </div>
                 <div class="row">
                     <div class="col-sm-4 col-sm-offset-4">
                         <form action="/search" method='get'>
-                            <div class="form-group">
-                            <div>
-                                <img src="/assets/images/1445395424_approval.png"></img>
-                            </div>
-                                <label>I want to...</label>
-                                <input class="form-control" name="q" type="text" value="fix my wrist pain" required>
-                            </div>
-                            <div class="form-group">
-                                <button id="top-quote-btn" type="submit" class="btn btn-block btn-info">Do it!</button>
-                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+    -->
     </section>
 </div>
 
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="/assets/js/jquery.backgroundvideo.min.js"></script>
-<!--<script src="/assets/js/script.js"></script>-->
+<script src="/assets/js/script.js"></script>
 {% endblock %}

@@ -1524,9 +1524,10 @@ section * {
 }
 
 .header-10-sub {
+  padding: 30px;
   position: relative;
   z-index: 50;
-  height: 800px;
+  height: 200px;
   color: white;
   text-align: center;
 }
@@ -1538,7 +1539,6 @@ section * {
 
 .header-10-sub.v-center > div {
   display: table-cell;
-  vertical-align: middle;
   margin-top: 0;
   margin-bottom: 0;
   float: none;

@@ -55,7 +55,6 @@ class ProductionConfig(Config):
     PROD = True
 
     mongodb_uri = os.environ.get('MONGOLAB_URI') or DEFAULT_MONGODB_URI
-    payment_endpoint = "http://172.31.26.118/credit_cards"
     #public_key = get_key(os.environ.get('PUBLIC_KEY_PATH') or DEFAULT_PUBLIC_KEY_PATH)
 
     apis = {

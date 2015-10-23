@@ -1,0 +1,60 @@
+
+## KG for the facts
+
+Barack Obama - Height - 6’0”
+Barack Obama - Wife - Michelle Obama
+
+## KG for physical tasks
+
+lower back pain removal - helps with - sleep
+Strong core - Helps - Lower back pain
+Strong core - Helps - Posture
+Posture - improve - orientation of your scapula
+improved scapula struature - improves - Carpal tunnel
+
+breakdancing - releases - endorphins
+endorphins - makes you - feel better
+feel better - related to - depression
+breakdancing - great way - improve strong core
+
+epson salt - leads to - magnesium to muscles
+magnesium to muscles - aids in - improved blood flow
+improved blood flow - is a step for - muscle relaxation
+muscle relaxation - is needed for - [carpal tunnel, ankle pain]
+ankle pain - consists of - 10 physical ankle pain factors
+10 physical ankle pain factors - is - [knee strain, tight quadracep]
+tight quadracep - is helped by - doing stretch D
+doing stretch D - looks like - this stretch D image
+knee strain - involves buying - foam roller
+# This is where it starts to get hairy and I need to think about the representation
+foam roller - is needed for - different quadracep physical pain
+different quadracep physical pain - is - [cat 1 quad, cat 2 quad, cat 3 quad, cat 4]
+cat 1 quad - characterized by - cannot pull knee more than 70% back
+cat 1 quad - requires - Knee strengthening band from Amazon
+
+## KG for mental health tasks
+
+SSRI - normal person - feel fine
+SSRI - lead to - reduced lower back pain
+sleep - not enough - leads to depression
+SSRI - helps - social anxiety
+SSRI - helps - depression
+SSRI - helps - anxiety
+
+SSRI - helps - high urge to urination
+SSRI - helps - sexual drive
+sexual drive - bad - depression
+
+## KG for insurance customer service
+
+Insurance - makes people think of - insurance is a scam
+insurance is a scam - because - a friend had a bad insurance experience with AllState
+a friend had a bad insurance experience with AllState - because - the claims adjuster denied a drunk driver was at fault (C)
+(C) - made the customer believe - AllState is blatantly avoiding paying
+AllState is blatantly avoiding paying - makes the customer think of - distrust
+distrust - leads to - lower oxytocin levels
+lower oxytocin levels - leads to - lower happiness
+lower happiness - leads to - less customer engagement
+less customer engagement - leads to - less long term revenue
+less long term revenue - leads to - company failing
+

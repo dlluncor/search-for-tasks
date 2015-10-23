@@ -57,7 +57,7 @@ def deploy(machine, name, passwd):
     cmds = [
         'cd /u/app/data-mining',
         'printf ">>>> Update Codes\n"',
-        'git pull --rebase https://%s:%s@github.com/bonjoylabs/data-mining master' % (name, passwd),
+        'git pull --rebase https://%s:%s@github.com/bonjoylabs/search-for-tasks master' % (name, passwd),
         'git log -1',
         'printf "\n>>>> Restart service\n"',
         'sudo restart renters',
