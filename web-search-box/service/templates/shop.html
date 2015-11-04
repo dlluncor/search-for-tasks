@@ -1,0 +1,85 @@
+{% extends "partials/base.html" %}
+{% block head %}
+    <link rel="stylesheet" href="/assets/css/home.min.css">
+    <style>
+        .num-items-in-cart-icon{
+          display: block;
+          padding: 0 0 0 26px;
+          
+          background: url(//cdn.shopify.com/s/files/1/0185/6232/t/1/assets/cart-icons.png?17904534759617392317) 0 0 no-repeat;
+          
+          }
+
+         h2.shop-page { color: black;}
+         label.shop-page { color: black;}
+         button { color: white; }
+
+         .block-inline {
+            display: inline-block;
+         }
+    </style>
+    {{ super() }}
+{% endblock %}
+
+{% block body %}
+{{ super() }}
+
+<div class="page-wrapper shop-page">
+    <div style="float:right; background:#eeeeee;" width="40px;">
+    <a class="num-items-in-cart-icon"></a>
+        My cart has <span id="items-in-cart">0</span> items | <a href="/view_cart">View Cart</a> | <a href="/checkout">Checkout</a>
+    </div>
+    <section class="v-center">
+        <div class="background use-cover">
+            <div class="black-cover"></div>
+            &nbsp;
+        </div>
+        <div>
+            <div class="container" style="text-align:center;">
+                <div class="row">
+                    <div class="col-sm-4 col-sm-offset-4">
+                           <div class="form-group block-inline">
+                                <h2>Products</h2>
+                            </div>
+                            <div class="form-group padding:10px; border-bottom:1px solid grey; block-inline">
+                                <span>
+                                  <label>SPRI massage ball</label> 
+                                  <a href="/item_page?item=orange_massage_ball">
+                                    <img src="http://ecx.images-amazon.com/images/I/71dgm-uaHEL._SL1500_.jpg"></img>
+                                  </a>
+                                  <div style="padding:5px;"></div>
+                                <button class="btn" onclick="theCart.addToCart('spri_massage_ball');">Add to cart</button>
+                                </span>
+                            </div>
+                            <div class="form-group block-inline">
+                                <span>
+                                  <label>SOMA massage balls</label> 
+                                  <a href="/item_page?item=soma_massage_balls">
+                                    <img src="http://ecx.images-amazon.com/images/I/71t%2B8alXghL._SL1500_.jpg"></img>
+                                  </a>
+                                  <div style="padding:5px;"></div><button class="btn" onclick="theCart.addToCart('soma_massage_balls');">Add to cart</button>
+                                </span>
+                            </div>
+                        <form action="/checkout" method='get'>
+                            <div class="form-group">
+                                <button id="top-quote-btn" type="submit" class="btn btn-block btn-info">Checkout</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="/assets/js/jquery.backgroundvideo.min.js"></script>
+<script src="/assets/js/cart.js"></script>
+<script>
+  $(document).ready(function(){
+    theCart.refreshView();
+  });
+</script>
+<!--<script src="/assets/js/script.js"></script>-->
+{% endblock %}

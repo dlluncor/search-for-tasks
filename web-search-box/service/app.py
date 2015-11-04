@@ -29,6 +29,14 @@ app.logger.addHandler(log_err_handler)
 def send_js(path):
     return send_from_directory('assets', path)
 
+@app.route('/shop')
+def shop():
+    return util.render_common_template('shop.html')
+
+@app.route('/view_cart')
+def view_cart():
+    return util.render_common_template('view_cart.html')
+
 @app.route('/')
 def home_page():
     return util.render_common_template('index.html')
