@@ -22,7 +22,7 @@
         My cart has <span id="items-in-cart">0</span> items | <a href="/view_cart">View Cart</a> | <a href="/checkout">Checkout</a>
     </div>
     <section class="header-10-sub v-center bg-midnight-blue">
-        <div class="background use-cover">
+        <div>
             <div class="black-cover"></div>
             &nbsp;
         </div>
@@ -47,11 +47,26 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="/assets/js/jquery.backgroundvideo.min.js"></script>
 <script src="/assets/js/cart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 <script>
-  $(document).ready(function(){
-    theCart.refreshView();
-
-    // Show items from the cart.
+  var ctrl = {};
+  ctrl.removeOne = function(item) {
+    window.console.log('Removing ' + item);
+    theCart.remove(item, 1);
+    $('#cart-table').html('');
+    ctrl.renderCartTable();
+  }
+  ctrl.rowTmplTxt =
+            '<tr>' +
+            '<td></td><td><%=display_name%></td>' +
+            '<td>$<%=price%></td><td><%=quantity%></td>' +
+            '<td>$<%=total_price%></td>' +
+            '<td><button class="btn" onclick="ctrl.removeOne(\'<%=internal_name%>\');">' +
+            'Remove one</button></td>' +
+            '</tr>';
+  ctrl.rowTmpl = _.template(ctrl.rowTmplTxt);
+  ctrl.renderCartTable = function() {
+        // Show items from the cart.
     var cart = theCart.getCart();
     var itemKeys = Object.keys(cart['items']);
     itemKeys.sort();
@@ -60,16 +75,24 @@
       var itemKey = itemKeys[i];
       var numItems = cart['items'][itemKey];
       window.console.log('Have ' + numItems + ' of ' + itemKey);
+      var row = cItems['d'][itemKey];
+      row['quantity'] = numItems;
+      row['total_price'] = numItems * row['price'];
+      // Add quantity
+      // Add total = quantity * price per amount
+      rows.push(row);
     }
-
-    var cols = ['', 'Orange ball', '$10.00', '1', '$10.00', 'Remove'];
-    var row0 = '<tr>';
-    for (var i = 0; i < cols.length; i++) {
-      row0 += '<td>' + cols[i] + '</td>';
+    for (var i = 0; i < rows.length; i++) {
+      var rowHtml = ctrl.rowTmpl(rows[i]);
+      // Show items from cart.
+      $('#cart-table').append(rowHtml);
     }
-    row0 += '</tr>';
-    // Show items from cart.
-    $('#cart-table').append(row0);
+  }
+</script>
+<script>
+  $(document).ready(function(){
+    theCart.refreshView();
+    ctrl.renderCartTable();
   });
 </script>
 {% endblock %}

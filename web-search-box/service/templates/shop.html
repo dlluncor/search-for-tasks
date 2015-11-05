@@ -24,11 +24,15 @@
 {% block body %}
 {{ super() }}
 
-<div class="page-wrapper shop-page">
-    <div style="float:right; background:#eeeeee;" width="40px;">
-    <a class="num-items-in-cart-icon"></a>
-        My cart has <span id="items-in-cart">0</span> items | <a href="/view_cart">View Cart</a> | <a href="/checkout">Checkout</a>
+<div height="10px;">
+    <div style="background:#eeeeee; text-align:right;" width="40px;height:10px;">
+        My cart has 
+        <span id="items-in-cart">0</span> items | 
+        <a href="/view_cart" style="z-index:100;">View Cart</a> | 
+        <a href="/checkout">Checkout</a>
     </div>
+</div>
+<div class="page-wrapper shop-page">
     <section class="v-center">
         <div class="background use-cover">
             <div class="black-cover"></div>
@@ -39,27 +43,10 @@
                 <div class="row">
                     <div class="col-sm-4 col-sm-offset-4">
                            <div class="form-group block-inline">
-                                <h2>Products</h2>
-                            </div>
-                            <div class="form-group padding:10px; border-bottom:1px solid grey; block-inline">
-                                <span>
-                                  <label>SPRI massage ball</label> 
-                                  <a href="/item_page?item=orange_massage_ball">
-                                    <img src="http://ecx.images-amazon.com/images/I/71dgm-uaHEL._SL1500_.jpg"></img>
-                                  </a>
-                                  <div style="padding:5px;"></div>
-                                <button class="btn" onclick="theCart.addToCart('spri_massage_ball');">Add to cart</button>
-                                </span>
-                            </div>
-                            <div class="form-group block-inline">
-                                <span>
-                                  <label>SOMA massage balls</label> 
-                                  <a href="/item_page?item=soma_massage_balls">
-                                    <img src="http://ecx.images-amazon.com/images/I/71t%2B8alXghL._SL1500_.jpg"></img>
-                                  </a>
-                                  <div style="padding:5px;"></div><button class="btn" onclick="theCart.addToCart('soma_massage_balls');">Add to cart</button>
-                                </span>
-                            </div>
+                             <h2>Products</h2>
+                           </div>
+                           <div id="products-container">
+                           </div>
                         <form action="/checkout" method='get'>
                             <div class="form-group">
                                 <button id="top-quote-btn" type="submit" class="btn btn-block btn-info">Checkout</button>
@@ -75,11 +62,35 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="/assets/js/jquery.backgroundvideo.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 <script src="/assets/js/cart.js"></script>
+<script>
+  var ctrl = {};
+  ctrl.itemTmplTxt =
+            '<div class="form-group padding:10px; border-bottom:1px solid grey; block-inline">' +
+                '<span>' +
+                '  <label><%=display_name%></label> ' +
+                '  <a target="_blank" href="<%=amazon_link%>">' +
+                '    <img src="<%=img_link%>"></img>' +
+                '  </a>' +
+                '  <div style="padding:5px;"></div>' +
+                '<button class="btn" onclick="theCart.addToCart(\'<%=internal_name%>\');">Add to cart</button>' +
+                '</span>' +
+            '</div>';
+  ctrl.itemTmpl = _.template(ctrl.itemTmplTxt);
+</script>
 <script>
   $(document).ready(function(){
     theCart.refreshView();
   });
+  var items = [
+      cItems['d']['spri_massage_ball'],
+      cItems['d']['soma_massage_balls']
+    ];
+  for (var i = 0; i < items.length; i++) {
+    var txt = '<div id="item' + i + ">" + ctrl.itemTmpl(items[i]) + "</div>";
+    $('#products-container').append(txt);
+  }
 </script>
 <!--<script src="/assets/js/script.js"></script>-->
 {% endblock %}
