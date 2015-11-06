@@ -1,3 +1,5 @@
+
+// Cart data.
 var cItems = {};
 
 cItems['d'] = {
@@ -16,6 +18,49 @@ cItems['d'] = {
     'price': 34.99
   }
 };
+
+
+var cartTable = {};
+cartTable.removeOne = function(item) {
+  window.console.log('Removing ' + item);
+  theCart.remove(item, 1);
+  $('#cart-table').html('');
+  cartTable.renderCartTable();
+}
+cartTable.rowTmplTxt =
+          '<tr>' +
+          '<td></td><td><%=display_name%></td>' +
+          '<td>$<%=price%></td><td><%=quantity%></td>' +
+          '<td>$<%=total_price%></td>' +
+          '<td><button class="btn" onclick="ctrl.removeOne(\'<%=internal_name%>\');">' +
+          'Remove one</button></td>' +
+          '</tr>';
+cartTable.rowTmpl = _.template(cartTable.rowTmplTxt);
+cartTable.renderCartTable = function() {
+      // Show items from the cart.
+  var cart = theCart.getCart();
+  var itemKeys = Object.keys(cart['items']);
+  itemKeys.sort();
+  var rows = [];
+  for (var i = 0; i < itemKeys.length; i++) {
+    var itemKey = itemKeys[i];
+    var numItems = cart['items'][itemKey];
+    window.console.log('Have ' + numItems + ' of ' + itemKey);
+    var row = cItems['d'][itemKey];
+    row['quantity'] = numItems;
+    row['total_price'] = numItems * row['price'];
+    // Add quantity
+    // Add total = quantity * price per amount
+    rows.push(row);
+  }
+  for (var i = 0; i < rows.length; i++) {
+    var rowHtml = cartTable.rowTmpl(rows[i]);
+    // Show items from cart.
+    $('#cart-table').append(rowHtml);
+  }
+}
+
+// Cart logic.
 
 var theCart = {};
 

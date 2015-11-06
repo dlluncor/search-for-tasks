@@ -14,8 +14,9 @@
          label.shop-page { color: black;}
          button { color: white; }
 
-         .block-inline {
-            display: inline-block;
+         .item-img-size {
+            height:140px;
+            width:300px;
          }
     </style>
     {{ super() }}
@@ -24,14 +25,7 @@
 {% block body %}
 {{ super() }}
 
-<div height="10px;">
-    <div style="background:#eeeeee; text-align:right;" width="40px;height:10px;">
-        My cart has 
-        <span id="items-in-cart">0</span> items | 
-        <a href="/view_cart" style="z-index:100;">View Cart</a> | 
-        <a href="/checkout">Checkout</a>
-    </div>
-</div>
+{% include "partials/cart.html" %}
 <div class="page-wrapper shop-page">
     <section class="v-center">
         <div class="background use-cover">
@@ -41,7 +35,7 @@
         <div>
             <div class="container" style="text-align:center;">
                 <div class="row">
-                    <div class="col-sm-4 col-sm-offset-4">
+                    <div class="col-sm-4 col-sm-offset-4" style="width:300px;">
                            <div class="form-group block-inline">
                              <h2>Products</h2>
                            </div>
@@ -67,13 +61,14 @@
 <script>
   var ctrl = {};
   ctrl.itemTmplTxt =
-            '<div class="form-group padding:10px; border-bottom:1px solid grey; block-inline">' +
+            '<div class="form-group block-inline" style="padding:10px; display:table-cell;">' +
                 '<span>' +
                 '  <label><%=display_name%></label> ' +
                 '  <a target="_blank" href="<%=amazon_link%>">' +
-                '    <img src="<%=img_link%>"></img>' +
+                '    <img class="item-img-size" src="<%=img_link%>"></img>' +
                 '  </a>' +
-                '  <div style="padding:5px;"></div>' +
+                '  <span style="padding:5px;"></span>' +
+                '  <span>$<%=price%></span>' +
                 '<button class="btn" onclick="theCart.addToCart(\'<%=internal_name%>\');">Add to cart</button>' +
                 '</span>' +
             '</div>';

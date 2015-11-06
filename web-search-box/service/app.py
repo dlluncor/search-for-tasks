@@ -37,6 +37,10 @@ def shop():
 def view_cart():
     return util.render_common_template('view_cart.html')
 
+@app.route('/checkout')
+def checkout():
+    return util.render_common_template('checkout.html')
+
 @app.route('/')
 def home_page():
     return util.render_common_template('index.html')

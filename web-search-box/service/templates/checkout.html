@@ -18,13 +18,11 @@
 
 <div class="page-wrapper">
     {% include "partials/cart.html" %}
-    <section class="header-10-sub v-center bg-midnight-blue" style="display:block;">
-        <div>
-            <div class="black-cover"></div>
-            &nbsp;
+    <div class="header-10-sub v-center bg-midnight-blue" style="display:block;">
+        <div style="display:block;">
+          <h2>Checkout</h2>
         </div>
-        <h2>Shopping cart</h2>
-       {% include "partials/cart_table.html" %}
+        {% include "partials/cart_table.html" %}
         <div>
             <div class="container">
                 <div class="row">
@@ -33,7 +31,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 </div>
 
 <!-- Placed at the end of the document so the pages load faster -->
@@ -41,8 +39,6 @@
 <script src="/assets/js/jquery.backgroundvideo.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 <script src="/assets/js/cart.js"></script>
-<script>
-</script>
 <script>
   $(document).ready(function(){
     theCart.refreshView();
